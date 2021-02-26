@@ -1,0 +1,38 @@
+//#include <sstream>
+//#include <iostream.h>
+//#include <fstream>
+//#include <cstring>
+#include <TCanvas.h>
+#include <TGraph.h>
+#include <math.h>
+
+using namespace std;
+
+void countspeed(){
+	
+const Int_t m=8;	
+Double_t c1[m]={0,72.03,79.6,81.76,82.86,90.8,102.06,108.93};
+Double_t c2[m]={0,68.83,81.2,82.9,81.9,90.6,103.3,111.9};
+Double_t c3[m+1]={0,60.6,70.6,70.93,70.76,71.23,74.46,76.56,77.2};
+Double_t erc1[m],erc2[m],erc3[m+1];
+Double_t U1[m]={814,815,840,865,890,915,940,950};
+Double_t U2[m]={808,810,835,860,885,910,935,950};
+Double_t U3[m+1]={788,790,815,840,865,890,915,940,950};
+Double_t erU1[m]={1,1,1,1,1,1,1};
+Double_t erU3[m+1]={1,1,1,1,1,1,1,1};
+Int_t i;
+for(i=0;i<m;i++){
+	erc1[i]=sqrt(c1[i]);
+	erc2[i]=sqrt(c2[i]);
+	erc3[i]=sqrt(c3[i]); 
+	 }	
+	 erc3[m+1]=sqrt(c3[m+1]);
+	 TCanvas *ca1 = new TCanvas("c1","Graph n/U",60,40,1200,800);
+	ca1->SetGrid();
+	TGraph *gr1 = new TGraphErrors(m,U1,c1,erU1,erc1);
+	TGraph *gr2 = new TGraphErrors(m,U2,c2,erU1,erc2);
+	TGraph *gr3 = new TGraphErrors(m+1,U3,c3,erU3,erc3);
+	gr3->Draw("C");
+	gr2->Draw("same");
+	gr1->Draw("same");
+}
